@@ -1,0 +1,29 @@
+﻿@model List<ĐỒ_ÁN.tblSanPham>
+
+<div class="product-grid">
+    @if (Model != null && Model.Any())
+    {
+        foreach (var item in Model)
+        {
+            <div class="product-card">
+                <div class="product-image">
+                    <a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.MaSP })">
+                        <img src="@Url.Content("~/Content/Images/" + item.AnhDaiDien)" class="card-img-top" alt="@item.TenSP">
+                    </a>
+                </div>
+                <div class="product-info">
+                    <h3><a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.MaSP })">@item.TenSP</a></h3>
+                   
+                    <div class="product-price">
+                        <p class="text-danger fw-bold">@item.GiaBan.Value.ToString("N0") VNĐ</p>
+                    </div>
+                    <a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.MaSP })" class="btn btn-sm btn-outline-primary">Xem chi tiết</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-danger">Không tìm thấy sản phẩm nào.</p>
+    }
+</div>

@@ -1,0 +1,75 @@
+﻿@model IEnumerable<ĐỒ_ÁN.tblHoaDon>
+@{
+    ViewBag.Title = "Quản Lý Đơn Hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="bi bi-cart-check"></i> Quản Lý Đơn Hàng</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mã ĐH</th>
+                        <th>Khách Hàng</th>
+                        <th>Ngày Lập</th>
+                        <th>Tổng Tiền</th>
+                        <th>Tình Trạng</th>
+                        <th>Thanh Toán</th>
+                        <th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>#@item.MaHD</td>
+                            <td>@item.tblKhachHang.TenKH</td>
+                            <td>@item.NgayLap.Value.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td><strong>@string.Format("{0:N0}đ", item.TongTien)</strong></td>
+                            <td>
+                                @{
+                                    var badgeClass = "";
+                                    switch (item.TinhTrang)
+                                    {
+                                        case 1: badgeClass = "bg-warning"; break;
+                                        case 2: badgeClass = "bg-info"; break;
+                                        case 3: badgeClass = "bg-success"; break;
+                                        case 4: badgeClass = "bg-danger"; break;
+                                    }
+                                }
+                                <span class="badge @badgeClass">@item.tblTinhTrang.TinhTrangHoaDon</span>
+                            </td>
+                            <td>
+                                @if (item.DaThanhToan == true)
+                                {
+                                    <span class="badge bg-success" style="color:greenyellow">Đã thanh toán</span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning" style="color:red">Chưa thanh toán</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="@Url.Action("ChiTietDonHang","Admin", new { id = item.MaHD })"
+                                   class="btn btn-sm btn-info">
+                                    <i class="bi bi-eye"></i> Chi tiết
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

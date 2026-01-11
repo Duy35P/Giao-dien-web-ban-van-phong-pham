@@ -1,0 +1,206 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Quản Trị Hệ Thống</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        
+        body {
+            background-color: #ecf0f5;
+            font-family: 'Source Sans Pro', sans-serif;
+            font-size: 14px;
+            overflow-x: hidden;
+        }
+
+        .main-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1030;
+        }
+
+        .navbar {
+            margin-bottom: 0;
+            border: none;
+            border-radius: 0;
+            background-color: #3c8dbc;
+            min-height: 50px;
+        }
+
+        .logo {
+            display: block;
+            float: left;
+            height: 50px;
+            font-size: 20px;
+            line-height: 50px;
+            text-align: center;
+            width: 230px;
+            background-color: #367fa9;
+            color: #fff;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+            .logo:hover {
+                background-color: #357ca5;
+                color: #fff;
+            }
+
+        .main-sidebar {
+            position: fixed;
+            top: 50px;
+            left: 0;
+            bottom: 0;
+            width: 230px;
+            z-index: 810;
+            background-color: #222d32;
+            padding-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .content-wrapper {
+            margin-left: 230px;
+            background-color: #ecf0f5;
+            padding: 20px;
+            margin-top: 50px;
+            min-height: 100vh;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .sidebar-menu > li.header {
+                color: #4b646f;
+                background: #1a2226;
+                padding: 10px 25px 10px 15px;
+                font-size: 12px;
+                text-transform: uppercase;
+            }
+
+            .sidebar-menu > li > a {
+                padding: 12px 15px;
+                display: block;
+                color: #b8c7ce;
+                text-decoration: none;
+                border-left: 3px solid transparent;
+            }
+
+                .sidebar-menu > li > a:hover, .sidebar-menu > li.active > a {
+                    color: #fff;
+                    background: #1e282c;
+                    border-left-color: #3c8dbc;
+                }
+
+                .sidebar-menu > li > a > i {
+                    width: 20px;
+                }
+
+    
+        .user-panel {
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+            .user-panel img {
+                width: 45px;
+                height: 45px;
+                border-radius: 50%;
+                border: 2px solid #3c8dbc;
+                margin-right: 10px;
+            }
+
+            .user-panel .info {
+                color: #fff;
+            }
+
+                .user-panel .info p {
+                    margin: 0;
+                    font-weight: 600;
+                }
+
+                .user-panel .info a {
+                    font-size: 11px;
+                    color: #b8c7ce;
+                }
+
+
+        @@media (max-width: 767px) {
+            .main-sidebar {
+                transform: translate(-230px, 0);
+            }
+
+            .content-wrapper {
+                margin-left: 0;
+            }
+
+            .logo {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="@Url.Action("Index", "Admin")" class="logo"><b>ADMIN</b> VPP</a>
+        <nav class="navbar navbar-static-top">
+            <div class="navbar-custom-menu pull-right" style="margin-right: 15px;">
+                <ul class="nav navbar-nav">
+                    <li><a href="@Url.Action("Logout", "Admin")" style="color:white; line-height: 20px; padding-top: 15px;"><i class="fa fa-sign-out"></i> Đăng xuất</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            <div class="user-panel">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=fff&color=000" alt="User Image">
+                <div class="info">
+                    <p>Quản Trị Viên</p>
+                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                </div>
+            </div>
+            <ul class="sidebar-menu">
+                <li class="header">DANH MỤC CHÍNH</li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+                    <a href="@Url.Action("Index", "Admin")"><i class="fa fa-dashboard"></i> <span>Tổng quan</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "QuanLySanPham" ? "active" : "")">
+                    <a href="@Url.Action("QuanLySanPham", "Admin")"><i class="fa fa-cube"></i> <span>Sản phẩm</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "QuanLyDonHang" ? "active" : "")">
+                    <a href="@Url.Action("QuanLyDonHang", "Admin")"><i class="fa fa-shopping-cart"></i> <span>Đơn hàng</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "QuanLyNhanVien" ? "active" : "")">
+                    <a href="@Url.Action("QuanLyNhanVien", "Admin")"><i class="fa fa-users"></i> <span>Nhân viên</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "QuanLyKhachHang" ? "active" : "")">
+                    <a href="@Url.Action("QuanLyKhachHang", "Admin")"><i class="fa fa-user-plus"></i> <span>Khách hàng</span></a>
+                </li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "BaoCaoDoanhThu" ? "active" : "")">
+                    <a href="@Url.Action("BaoCaoDoanhThu", "Admin")"><i class="fa fa-bar-chart"></i> <span>Báo cáo doanh thu</span></a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        @RenderBody()
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

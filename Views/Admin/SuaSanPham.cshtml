@@ -1,0 +1,265 @@
+﻿@model ĐỒ_ÁN.tblSanPham
+@{
+    ViewBag.Title = "Sửa Sản Phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var hinhAnhs = ViewBag.HinhAnhs as List<ĐỒ_ÁN.tblHinhAnh>;
+}
+
+<div class="container">
+    <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Sửa Sản Phẩm</h2>
+
+    @using (Html.BeginForm("SuaSanPham", "Admin", FormMethod.Post, new { @class = "card p-4", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.MaSP)
+        @Html.HiddenFor(m => m.AnhDaiDien)
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Tên Sản Phẩm <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.TenSP, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Thương Hiệu <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.ThuongHieu, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Loại Sản Phẩm <span class="text-danger">*</span></label>
+                @Html.DropDownListFor(m => m.LoaiSP, (SelectList)ViewBag.LoaiSP, new { @class = "form-select", required = "required" })
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Nhà Cung Cấp <span class="text-danger">*</span></label>
+                @Html.DropDownListFor(m => m.NCC, (SelectList)ViewBag.NCC, new { @class = "form-select", required = "required" })
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Đơn Vị Tính <span class="text-danger">*</span></label>
+                <div class="col-sm-4">
+                    @Html.TextBoxFor(m => m.DonViTinh, new { @class = "form-control", required = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Số Lượng Tồn <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number", min = "0", required = "required" })
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Giá Bán <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control", type = "number", min = "0", step = "1000", required = "required" })
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô Tả Chi Tiết</label>
+            @Html.TextAreaFor(m => m.MoTaChiTiet, new { @class = "form-control", rows = "3" })
+        </div>
+
+        <hr class="my-4" />
+        <h4 class="mb-3"><i class="bi bi-images"></i> Quản Lý Hình Ảnh</h4>
+
+        <!-- Ảnh đại diện hiện tại -->
+        <div class="mb-4">
+            <h5><i class="bi bi-image"></i> Ảnh Đại Diện Hiện Tại</h5>
+            @if (!string.IsNullOrEmpty(Model.AnhDaiDien))
+            {
+                <div class="card" style="max-width: 300px;">
+                    <img src="~/Content/Images/@Model.AnhDaiDien" class="card-img-top" alt="@Model.TenSP" style="height: 250px; object-fit: cover;" />
+                    <div class="card-body">
+                        <span class="badge bg-primary">Ảnh đại diện</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">Chưa có ảnh đại diện</p>
+            }
+        </div>
+
+        <!-- Ảnh mô tả hiện tại -->
+        if (hinhAnhs != null && hinhAnhs.Count > 0)
+        {
+            <div class="mb-4">
+                <h5><i class="bi bi-collection"></i> Ảnh Mô Tả Hiện Tại (@hinhAnhs.Count ảnh)</h5>
+                <div class="row">
+                    @foreach (var hinh in hinhAnhs)
+                    {
+                        <div class="col-md-2 col-sm-4 col-6 mb-3" id="img-@hinh.ID">
+                            <div class="card">
+                                <img src="~/Content/Images/@hinh.TenHinh" class="card-img-top" alt="Ảnh mô tả"
+                                    onerror="this.src='/Content/Images/no-image.jpg'"   style="height: 150px; object-fit: cover;" />
+                                <div class="card-body p-2 text-center">
+                                    <button type="button" class="btn btn-danger btn-sm w-100"
+                                            onclick="xoaHinhAnh(@hinh.ID)">
+                                        <i class="bi bi-trash"></i> Xóa
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <!-- Upload ảnh mới -->
+        <div class="mb-3">
+            <label class="form-label">
+                <i class="bi bi-cloud-upload"></i> Thêm/Thay Đổi Hình Ảnh
+            </label>
+            <input type="file" name="AnhSanPhamFiles" id="AnhSanPhamFiles"
+                   class="form-control" accept="image/*" multiple
+                   onchange="previewImages(event)" />
+            <div class="alert alert-warning mt-2 mb-0">
+                <i class="bi bi-exclamation-triangle"></i>
+                <strong>Lưu ý:</strong> Nếu chọn ảnh mới, <strong>ảnh đầu tiên</strong> sẽ thay thế ảnh đại diện cũ!
+            </div>
+        </div>
+
+        <div id="previewContainer" class="row mb-3"></div>
+
+        if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger mt-3">
+                <i class="bi bi-exclamation-triangle"></i> @TempData["Error"]
+            </div>
+        }
+
+        <div class="text-end mt-4">
+            <a href="@Url.Action("QuanLySanPham","Admin")" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Hủy
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Cập Nhật
+            </button>
+        </div>
+    }
+</div>
+
+<style>
+    .img-preview-wrapper {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .img-preview {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .img-preview-wrapper.first-image .img-preview {
+        border: 3px solid #0d6efd;
+    }
+
+    .badge-overlay {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .img-number {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+</style>
+
+@section scripts {
+    <script>
+        function previewImages(event) {
+            var container = document.getElementById('previewContainer');
+            container.innerHTML = '';
+
+            var files = event.target.files;
+
+            if (files.length === 0) return;
+
+            for (var i = 0; i < files.length; i++) {
+                (function(index) {
+                    var file = files[index];
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        var col = document.createElement('div');
+                        col.className = 'col-md-3 col-sm-4 col-6';
+
+                        var wrapper = document.createElement('div');
+                        wrapper.className = 'img-preview-wrapper';
+                        if (index === 0) {
+                            wrapper.classList.add('first-image');
+                        }
+
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-preview';
+
+                        var badge = document.createElement('span');
+                        badge.className = 'badge badge-overlay';
+                        if (index === 0) {
+                            badge.className += ' bg-primary';
+                            badge.textContent = 'ẢNH ĐẠI DIỆN';
+                        } else {
+                            badge.className += ' bg-secondary';
+                            badge.textContent = 'ẢNH MÔ TẢ';
+                        }
+
+                        var number = document.createElement('div');
+                        number.className = 'img-number';
+                        number.textContent = index + 1;
+
+                        wrapper.appendChild(img);
+                        wrapper.appendChild(badge);
+                        wrapper.appendChild(number);
+                        col.appendChild(wrapper);
+                        container.appendChild(col);
+                    }
+
+                    reader.readAsDataURL(file);
+                })(i);
+            }
+        }
+
+        function xoaHinhAnh(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa ảnh này?')) {
+                $.ajax({
+                    url: '@Url.Action("XoaHinhAnh", "Admin")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function(response) {
+                        if (response.success) {
+                            $('#img-' + id).fadeOut(300, function() {
+                                $(this).remove();
+                            });
+                            alert(response.message);
+                        } else {
+                            alert(response.message);
+                        }
+                    },
+                    error: function() {
+                        alert('Có lỗi xảy ra khi xóa ảnh!');
+                    }
+                });
+            }
+        }
+    </script>
+}

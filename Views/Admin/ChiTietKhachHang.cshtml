@@ -1,0 +1,132 @@
+﻿@model ĐỒ_ÁN.tblKhachHang
+@{
+    ViewBag.Title = "Chi Tiết Khách Hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var lichSu = (List<ĐỒ_ÁN.tblHoaDon>)ViewBag.LichSuMuaHang;
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="bi bi-person-circle"></i> Chi Tiết Khách Hàng</h2>
+        <a href="@Url.Action("QuanLyKhachHang","Admin")" class="btn btn-secondary">
+            <i class="bi bi-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body text-center">
+                    @if (!string.IsNullOrEmpty(Model.Avarta))
+                    {
+                        <img src="~/Images/@Model.Avarta" alt="Avatar" class="rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;" />
+                    }
+                    else
+                    {
+                        <div class="rounded-circle bg-secondary d-inline-flex align-items-center justify-content-center mb-3" style="width: 150px; height: 150px;">
+                            <i class="bi bi-person-fill text-white" style="font-size: 80px;"></i>
+                        </div>
+                    }
+
+                    <h4>@Model.TenKH</h4>
+                    <p class="text-muted">Mã KH: #@Model.MaKH</p>
+
+                    <hr />
+
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h5 class="text-primary">@ViewBag.TongDonHang</h5>
+                            <small class="text-muted">Đơn hàng</small>
+                        </div>
+                        <div class="col-6">
+                            <h5 class="text-success">@string.Format("{0:N0}đ", ViewBag.TongChiTieu)</h5>
+                            <small class="text-muted">Tổng chi tiêu</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-header bg-primary text-white">
+                    <h5><i class="bi bi-info-circle"></i> Thông Tin Cá Nhân</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-2">
+                        <div class="col-4"><strong>Giới tính:</strong></div>
+                        <div class="col-8">@Model.GioiTinh</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><strong>Năm sinh:</strong></div>
+                        <div class="col-8">@Model.NamSinh</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><strong>Email:</strong></div>
+                        <div class="col-8">@Model.Email</div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-4"><strong>Điện thoại:</strong></div>
+                        <div class="col-8">@Model.DienThoai</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4"><strong>Địa chỉ:</strong></div>
+                        <div class="col-8">@Model.DiaChi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5><i class="bi bi-clock-history"></i> Lịch Sử Mua Hàng</h5>
+                </div>
+                <div class="card-body">
+                    @if (lichSu != null && lichSu.Count > 0)
+                    {
+                        <table class="table table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Mã ĐH</th>
+                                    <th>Ngày Lập</th>
+                                    <th>Tổng Tiền</th>
+                                    <th>Tình Trạng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var hd in lichSu)
+                                {
+                                    <tr>
+                                        <td>
+                                            <a href="@Url.Action("ChiTietDonHang","Admin", new { id = hd.MaHD })">
+                                                #@hd.MaHD
+                                            </a>
+                                        </td>
+                                        <td>@hd.NgayLap.Value.ToString("dd/MM/yyyy")</td>
+                                        <td>@string.Format("{0:N0}đ", hd.TongTien)</td>
+                                        <td>
+                                            @{
+                                                var badgeClass = "";
+                                                switch (hd.TinhTrang)
+                                                {
+                                                    case 1: badgeClass = "bg-warning"; break;
+                                                    case 2: badgeClass = "bg-info"; break;
+                                                    case 3: badgeClass = "bg-success"; break;
+                                                    case 4: badgeClass = "bg-danger"; break;
+                                                }
+                                            }
+                                            <span class="badge @badgeClass">@hd.tblTinhTrang.TinhTrangHoaDon</span>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-center text-muted">Chưa có đơn hàng nào</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

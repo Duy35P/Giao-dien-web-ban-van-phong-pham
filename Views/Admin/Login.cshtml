@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Admin Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="login-container mt-4" style="max-width: 350px; margin:auto">
+        <div class="card shadow-lg p-3">
+            <h3 class="card-title text-center fw-bold mb-4">Đăng nhập Quản lý</h3>
+            @using (Html.BeginForm("LoginSubmit", "Admin", FormMethod.Post))
+            {
+                <div class="mb-3">
+                    <label for="loginTenNV" class="form-label">Tên đăng nhập</label>
+                    <input type="text" name="TenNV" class="form-control w-100" id="loginTenNV" required>
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Mật khẩu</label>
+                    <input type="password" name="Password" class="form-control w-100" id="loginPassword" required>
+                </div>
+                if (Session["Error"] != null)
+                {
+                    <h6 style="color:red">@Session["Error"]</h6>
+                }
+                <p class="text-center">
+                    Quên mật khẩu? <a href="#" class="text-decoration-none text-warning fw-bold">Liên hệ quản trị viên</a>
+                </p>
+                <button type="submit" class="btn btn-warning w-100 mb-3" style="border-radius:40px">ĐĂNG NHẬP</button>
+               
+            }
+        </div>
+    </div>
+</div>

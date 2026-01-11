@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Tổng Quan";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <h1>
+        Tổng Quan Hệ Thống
+        <small>Bảng điều khiển</small>
+    </h1>
+</section>
+
+<section class="content">
+    <div class="row">
+        <!-- Box 1 -->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box" style="background-color: #00c0ef; color: white; padding: 20px; border-radius: 3px; margin-bottom: 20px;">
+                <div class="inner">
+                    <h3>@ViewBag.TongSanPham</h3>
+                    <p>Sản Phẩm</p>
+                </div>
+                <div class="icon" style="float: right; font-size: 50px; opacity: 0.5;"><i class="fa fa-cube"></i></div>
+                <a href="@Url.Action("QuanLySanPham", "Admin")" style="color: white; display: block; margin-top: 10px;">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- Box 2 -->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box" style="background-color: #00a65a; color: white; padding: 20px; border-radius: 3px; margin-bottom: 20px;">
+                <div class="inner">
+                    <h3>@ViewBag.TongKhachHang</h3>
+                    <p>Khách Hàng</p>
+                </div>
+                <div class="icon" style="float: right; font-size: 50px; opacity: 0.5;"><i class="fa fa-users"></i></div>
+                <a href="@Url.Action("QuanLyKhachHang", "Admin")" style="color: white; display: block; margin-top: 10px;">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- Box 3 -->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box" style="background-color: #f39c12; color: white; padding: 20px; border-radius: 3px; margin-bottom: 20px;">
+                <div class="inner">
+                    <h3>@ViewBag.TongDonHang</h3>
+                    <p>Đơn Hàng</p>
+                </div>
+                <div class="icon" style="float: right; font-size: 50px; opacity: 0.5;"><i class="fa fa-shopping-cart"></i></div>
+                <a href="@Url.Action("QuanLyDonHang", "Admin")" style="color: white; display: block; margin-top: 10px;">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+        <!-- Box 4 -->
+        <div class="col-lg-3 col-xs-6">
+            <div class="small-box" style="background-color: #dd4b39; color: white; padding: 20px; border-radius: 3px; margin-bottom: 20px;">
+                <div class="inner">
+                    <h3>@String.Format("{0:N0}", ViewBag.TongDoanhThu)đ</h3>
+                    <p>Doanh Thu</p>
+                </div>
+                <div class="icon" style="float: right; font-size: 50px; opacity: 0.5;"><i class="fa fa-money"></i></div>
+                <a href="@Url.Action("BaoCaoDoanhThu", "Admin")" style="color: white; display: block; margin-top: 10px;">Xem báo cáo <i class="fa fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "User_Info";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+@model ĐỒ_ÁN.tblKhachHang
+
+
+<div class="card" style="padding:30px;max-width:700px;margin:0 auto" >
+    <h2 class="card-title" style="text-align:center">Thông tin tài khoản</h2>
+    <div class="card-body">
+        <p style="font-size:18px"><span style="font-size:22px; font-weight:bolder">Họ và tên:</span> @Model.TenKH</p><br />
+        <p style="font-size:18px"><span style="font-size:22px; font-weight:bolder">Email:</span> @Model.Email</p><br />
+        <p style="font-size:18px"><span style="font-size:22px; font-weight:bolder">Số điện thoại:</span> @Model.DienThoai</p><br />
+        <p style="font-size:18px"><span style="font-size:22px; font-weight:bolder">Ngày sinh:</span> @Model.NamSinh</p><br />
+        <p style="font-size:18px"><span style="font-size:22px; font-weight:bolder">Giới tính:</span> @Model.GioiTinh</p><br />
+        <p style="font-size:18px"><span style="font-size:22px; font-weight:bolder">Địa chỉ:</span> @Model.DiaChi</p><br />
+        <div style="text-align:center">
+            <a href="@Url.Action("Update_info","User")" class="btn btn-primary">Thay đổi thông tin</a>
+        </div>
+    </div>
+</div>

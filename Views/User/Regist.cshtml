@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = "Regist";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+       
+<div class="card shadow-lg p-3" style="margin:auto;max-width:700px">
+    <h3 class="card-title text-center fw-bold mb-4">Đăng kí</h3>
+    @using (Html.BeginForm("SubmitRegist", "User", FormMethod.Post, new { @style = "width:100%" }))
+    {
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label for="Name" class="form-label" style="font-weight:bolder">Tên của bạn</label>
+                <input type="text" name="TenKH" class="form-control" id="Name" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="loginEmail" class="form-label" style="font-weight:bolder">Email</label>
+                <input type="email" name="Email" class="form-control" id="loginEmail" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-6 flex-column">
+                <label class="form-label" style="font-weight:bolder">Giới tính:</label><br />
+                <input type="radio" name="GioiTinh" id="radio1" value="1" /><label class="form-label" for="radio1">Nam</label>
+                <input style="margin-left:15px" type="radio" name="GioiTinh" id="radio2" value="2" /><label class="form-label" for="radio2">Nữ</label>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="Phone" class="form-label" style="font-weight:bolder">Điện thoại</label>
+                <input type="number" name="DienThoai" class="form-control" id="Phone" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-6">
+                <label for="loginPassword" class="form-label" style="font-weight:bolder">Mật khẩu</label>
+                <input type="password" name="Password" class="form-control" id="loginPassword" required>
+            </div>
+            <div class="mb-3 col-6">
+                <label for="Re_Password" class="form-label" style="font-weight:bolder">Nhập lại mật khẩu</label>
+                <input type="password" name="Re_Password" class="form-control" id="Re_Password" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="mb-3 col-12">
+                <label for="Address" class="form-label" style="font-weight:bolder">Địa chỉ</label>
+                <input type="text" name="DiaChi" class="form-control" style="max-width:622px" id="Address" required>
+            </div>
+        </div>
+        if (Session["Error"] != null)
+        {
+            <h6 style="color:red">@Session["Error"]</h6>
+        }
+        <button type="submit" class="btn btn-warning w-100 mb-3" style="border-radius:40px">ĐĂNG KÍ</button>
+        <p class="text-center">
+            Đã có tài khoản? <a href="@Url.Action("Login","User")" class="text-decoration-none text-warning fw-bold">Đăng nhập tại đây</a>
+        </p>
+    }
+
+    <div style="text-align:center">
+        <button class="btn btn-danger" style="margin-right:10px;min-width:150px"><i class="bi bi-google "></i> Google</button>
+        <button class="btn btn-primary" style="min-width: 150px"><i class="bi bi-facebook "></i> Facebook</button>
+    </div>
+</div>
+      
+

@@ -1,0 +1,541 @@
+﻿@model ĐỒ_ÁN.tblSanPham
+
+@{
+    ViewBag.Title = Model.TenSP;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Tạo danh sách ảnh để xử lý Slider và Thumbnail
+    var danhSachAnh = new List<string>();
+    danhSachAnh.Add(Url.Content("~/Content/Images/" + Model.AnhDaiDien));
+
+    var danhSachAnhPhu = ViewBag.CacAnhPhu as List<ĐỒ_ÁN.tblHinhAnh>;
+    if (danhSachAnhPhu != null)
+    {
+        foreach (var anh in danhSachAnhPhu)
+        {
+            danhSachAnh.Add(Url.Content("~/Content/Images/" + anh.TenHinh));
+        }
+    }
+    var chuoiJsonAnh = new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(danhSachAnh);
+}
+
+<style>
+    /* ... (CSS Cũ Giữ Nguyên) ... */
+    .border-dashed {
+        border-style: dashed !important;
+    }
+
+    .prev-next-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        z-index: 10;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .prev-next-btn:hover {
+            opacity: 1;
+        }
+
+    .star-rating {
+        font-size: 0.8rem;
+    }
+
+    .rating-summary-bars .progress {
+        height: 10px;
+    }
+
+    .rating-summary-stars .fa-star {
+        font-size: 0.8rem;
+    }
+
+    .rating-stars-input i {
+        font-size: 1.75rem;
+        color: #adb5bd;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+        .rating-stars-input i:hover {
+            color: #ffc107;
+        }
+
+        .rating-stars-input i.selected, .rating-stars-input i.hover {
+            color: #ffc107 !important;
+        }
+
+    .thumbnail-img {
+        opacity: 0.6;
+        transition: all 0.2s ease;
+        border: 2px solid transparent;
+        cursor: pointer;
+    }
+
+        .thumbnail-img:hover {
+            opacity: 1;
+        }
+
+        .thumbnail-img.active {
+            opacity: 1;
+            border-color: #0d6efd;
+            transform: scale(1.05);
+        }
+
+    /* CSS CHO SLIDER SẢN PHẨM CÙNG LOẠI */
+    #related-slider {
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px; /* Chừa chỗ cho bóng đổ */
+    }
+
+        #related-slider::-webkit-scrollbar {
+            height: 6px;
+            display: none;
+        }
+    /* Ẩn thanh cuộn cho đẹp */
+
+    .related-product-card {
+        min-width: 240px;
+        max-width: 240px;
+        transition: transform 0.2s, box-shadow 0.2s;
+        background: #fff;
+    }
+
+        .related-product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+        }
+
+        .related-product-card .card-img-top {
+            height: 180px;
+            object-fit: contain;
+            padding: 10px;
+        }
+
+    /* Nút điều hướng Slider Sản phẩm cùng loại */
+    .slider-nav-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 45px;
+        background-color: white;
+        border: 1px solid #eee;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        color: #333;
+    }
+
+        .slider-nav-btn:hover {
+            background-color: #1a94ff;
+            color: white;
+            border-color: #1a94ff;
+        }
+
+    .slider-prev {
+        left: -10px;
+    }
+
+    .slider-next {
+        right: -10px;
+    }
+</style>
+
+<div class="container my-4">
+    <!-- ... (Phần Thông Tin Sản Phẩm Giữ Nguyên) ... -->
+    <div class="row border rounded-3">
+        <div class="col-lg-5 p-3">
+            <h2 class="mb-4 fw-bold">Thông tin sản phẩm</h2>
+            <div class="position-relative border rounded overflow-hidden bg-white" style="height: 400px;">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal" class="d-block w-100 h-100" style="cursor: zoom-in;">
+                    <img src="@Url.Content("~/Content/Images/" + Model.AnhDaiDien)" class="img-fluid w-100 h-100" style="object-fit: cover;" alt="@Model.TenSP" id="mainProductImage">
+                </a>
+                <button class="btn btn-light rounded-circle shadow-sm prev-next-btn" id="prevImageBtn" type="button" style="left: 10px;"><i class="fas fa-chevron-left"></i></button>
+                <button class="btn btn-light rounded-circle shadow-sm prev-next-btn" id="nextImageBtn" type="button" style="right: 10px;"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div id="imageSources" class="d-none" data-images='@Html.Raw(chuoiJsonAnh)'></div>
+            <div class="d-flex mt-3 gap-2 overflow-auto pb-2 px-1" id="thumbnail-container">
+                @for (int i = 0; i < danhSachAnh.Count; i++)
+                {
+                    <img src="@danhSachAnh[i]" class="img-thumbnail thumbnail-img rounded @(i == 0 ? "active" : "")" style="width: 80px; height: 80px; object-fit: cover; flex-shrink: 0;" data-index="@i" alt="Thumbnail @(i+1)" />
+                }
+            </div>
+        </div>
+
+        <div class="col-lg-7 p-4">
+            <h1 class="fs-4 fw-bold">@Model.TenSP</h1>
+            <div class="d-flex gap-3 text-muted fs-6 pb-3 border-bottom mb-3">
+                <span>Thương hiệu: <a href="#" class="text-decoration-none">@Model.ThuongHieu</a></span>
+                @if (Model.SoLuongTon > 0)
+                {
+                    <span>Tình trạng: <span class="text-success fw-semibold">Còn hàng (@Model.SoLuongTon)</span></span>
+                }
+                else
+                {
+                    <span>Tình trạng: <span class="text-danger fw-semibold">Hết hàng</span></span>
+                }
+            </div>
+            <span class="text-muted fs-6">Mã sản phẩm: @Model.MaSP</span>
+            <div class="bg-light p-3 rounded d-flex align-items-center gap-2 flex-wrap my-3">
+                <span class="text-danger fs-2 fw-bolder">@Model.GiaBan.Value.ToString("N0")₫</span>
+            </div>
+            @using (Html.BeginForm("AddCartItem", "Cart", FormMethod.Post))
+            {
+                @Html.Hidden("id", Model.MaSP)
+                <div class="d-flex align-items-center gap-2 my-4">
+                    <label for="quantity" class="fw-bold fs-6">Số lượng:</label>
+                    <div class="input-group" style="max-width: 150px;">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-giam">-</button>
+                        <input type="text" class="form-control text-center" value="1" id="quantity" name="soLuong">
+                        <button class="btn btn-outline-secondary" type="button" id="btn-tang">+</button>
+                    </div>
+                </div>
+                <div class="d-flex gap-3 my-3">
+                    <button type="submit" class="btn btn-outline-primary btn-lg flex-fill"><i class="fas fa-cart-plus me-2"></i> Thêm vào giỏ</button>
+                    <button type="submit" formaction="@Url.Action("MuaNgay","Cart")" class="btn btn-primary btn-lg flex-fill">Mua ngay</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- PHẦN SẢN PHẨM CÙNG LOẠI (Đã chỉnh sửa nút điều hướng) -->
+<div class="container my-4 border rounded-3 p-4 bg-white position-relative">
+    <h3 class="fw-bold text-primary mb-3"><i class="fas fa-thumbs-up me-2"></i>Sản phẩm cùng loại</h3>
+
+    <!-- Wrapper bao quanh slider để định vị nút -->
+    <div class="position-relative">
+
+        <!-- Nút Trái -->
+        <button class="slider-nav-btn slider-prev" onclick="scrollRelated(-1)">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+
+        <!-- Slider -->
+        <div id="related-slider" class="d-flex flex-nowrap overflow-auto gap-3 pb-2 px-1">
+            @foreach (var spLienQuan in (IEnumerable<ĐỒ_ÁN.tblSanPham>)ViewBag.SanPhamLienQuan)
+            {
+                <div class="card h-100 shadow-sm border rounded-3 flex-shrink-0 related-product-card">
+                    <div class="position-relative">
+                        <a href="@Url.Action("ChiTietSanPham", "Home", new { id = spLienQuan.MaSP })">
+                            <img src="@Url.Content("~/Content/Images/" + spLienQuan.AnhDaiDien)" class="card-img-top" alt="@spLienQuan.TenSP">
+                        </a>
+                    </div>
+                    <div class="card-body d-flex flex-column p-3">
+                        <a href="@Url.Action("ChiTietSanPham", "Home", new { id = spLienQuan.MaSP })" class="text-decoration-none text-dark fw-semibold product-name mb-2" title="@spLienQuan.TenSP">
+                            @spLienQuan.TenSP
+                        </a>
+
+                        <!-- Rating Logic -->
+                        @{
+                            double spRating = 0;
+                            int spReviewCount = 0;
+                            if (spLienQuan.tblDanhGia != null && spLienQuan.tblDanhGia.Any())
+                            {
+                                var validReviews = spLienQuan.tblDanhGia.Where(d => d.DiemDanhGia.HasValue);
+                                if (validReviews.Any())
+                                {
+                                    spRating = validReviews.Average(d => d.DiemDanhGia.Value);
+                                    spReviewCount = validReviews.Count();
+                                }
+                            }
+                            int spFullStars = (int)Math.Round(spRating);
+                        }
+                        <div class="star-rating mb-2">
+                            @if (spReviewCount > 0)
+                            {
+                                for (int i = 0; i < spFullStars; i++)
+                                {<i class="fas fa-star text-warning"></i> }
+                                for (int i = spFullStars; i < 5; i++)
+                                { <i class="far fa-star text-warning"></i> }
+                                <span class="text-muted ms-1">(@spReviewCount)</span>
+                            }
+                            else
+                            {
+                                for (int i = 0; i < 5; i++)
+                                { <i class="far fa-star text-muted"></i> }
+                                <span class="text-muted ms-1">(0)</span>
+                            }
+                        </div>
+
+                        <div class="mt-auto">
+                            <span class="fw-bold text-danger fs-5">@spLienQuan.GiaBan.Value.ToString("N0")₫</span>
+                            <a href="@Url.Action("ChiTietSanPham", "Home", new { id = spLienQuan.MaSP })" class="btn btn-sm btn-outline-primary float-end">Xem</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <!-- Nút Phải -->
+        <button class="slider-nav-btn slider-next" onclick="scrollRelated(1)">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+</div>
+
+<div class="container my-4 border rounded-3 p-4">
+    <h2 class="mb-4 fw-bold">Mô tả sản phẩm</h2>
+    <img src="@Url.Content("~/Content/Images/" + Model.AnhDaiDien)" class="img-fluid rounded mb-3" alt="@Model.TenSP" style="max-height: 400px; width: auto; display: block; margin-left: auto; margin-right: auto;">
+    <div class="collapse" id="productDescriptionCollapse">
+        @Html.Raw(Model.MoTaChiTiet)
+    </div>
+    <div class="text-center mt-3">
+        <button class="btn btn-outline-primary rounded-pill px-4" type="button" data-bs-toggle="collapse" data-bs-target="#productDescriptionCollapse" aria-expanded="false" aria-controls="productDescriptionCollapse" id="toggleDescriptionBtn">
+            Xem thêm
+        </button>
+    </div>
+</div>
+
+<!-- ... (Phần Đánh Giá ) ... -->
+<div class="container my-4 border rounded-3 p-4">
+    <h2 class="mb-4 fw-bold">Đánh giá sản phẩm</h2>
+    <div class="row mb-4">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+            <div class="d-flex align-items-center">
+                <div class="pe-3">
+                    <div class="fs-1 fw-bolder text-warning">@(((double)ViewBag.AvgRating).ToString("0.0"))</div>
+                    <div class="d-flex text-warning mb-2">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="text-muted">@ViewBag.TotalReviews đánh giá</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Session["UserName"] != null)
+    {
+        using (Html.BeginForm("ThemDanhGia", "Home", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("MaSP", Model.MaSP)
+            <h4 class="mb-3">Viết đánh giá của bạn</h4>
+            if (TempData["ReviewError"] != null)
+            { <div class="alert alert-danger">@TempData["ReviewError"]</div> }
+        if (TempData["ReviewSuccess"] != null)
+        { <div class="alert alert-success">@TempData["ReviewSuccess"]</div> }
+    <div class="mb-3">
+        <label class="form-label fw-bold">Đánh giá của bạn:</label>
+        <div class="rating-stars-input" id="ratingInput">
+            <i class="far fa-star" data-value="1"></i>
+            <i class="far fa-star" data-value="2"></i>
+            <i class="far fa-star" data-value="3"></i>
+            <i class="far fa-star" data-value="4"></i>
+            <i class="far fa-star" data-value="5"></i>
+        </div>
+        <input type="hidden" name="DiemDanhGia" id="ratingValue" value="0" />
+    </div>
+    <div class="mb-3">
+        <label for="BinhLuan" class="form-label fw-bold">Bình luận:</label>
+        <textarea class="form-control" id="BinhLuan" name="BinhLuan" rows="4" placeholder="Nhập bình luận của bạn..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Gửi đánh giá</button>
+}
+<hr class="my-4">
+}
+else
+{
+<div class="alert alert-info">Vui lòng <a href="@Url.Action("Login", "User")" class="alert-link">đăng nhập</a> để viết đánh giá.</div>
+<hr class="my-4">
+}
+
+    <div>
+        @foreach (var danhGia in (IEnumerable<ĐỒ_ÁN.tblDanhGia>)ViewBag.DanhGia)
+        {
+            <div class="mb-4">
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-3">
+                        <img src="@Url.Content(danhGia.tblKhachHang.Avarta != null ? "~/Content/Images/" + danhGia.tblKhachHang.Avarta : "https://via.placeholder.com/50.png?text=User")" class="rounded-circle" alt="Avatar" style="width:50px; height:50px;">
+                    </div>
+                    <div class="flex-grow-1">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">@danhGia.tblKhachHang.TenKH</span>
+                            <div>
+                                <span class="text-muted" style="font-size: 0.9rem; margin-right: 10px;">@danhGia.NgayDanhGia.Value.ToString("dd/MM/yyyy")</span>
+                                @if (Session["UserId"] != null)
+                                {
+                                    int currentUserId = 0;
+                                    int.TryParse(Session["UserId"].ToString(), out currentUserId);
+                                    if (currentUserId == danhGia.MaKH)
+                                    {
+                                        <button type="button" class="btn btn-warning btn-sm edit-review-btn" data-bs-toggle="modal" data-bs-target="#editReviewModal" data-madg="@danhGia.ID" data-diem="@danhGia.DiemDanhGia.GetValueOrDefault(0)" data-binhluan="@danhGia.BinhLuan" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .75rem;">Sửa</button>
+                                        using (Html.BeginForm("XoaDanhGia", "Home", FormMethod.Post, new { @class = "d-inline" }))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.Hidden("maDG", danhGia.ID)
+                                            @Html.Hidden("maSP", Model.MaSP)
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa đánh giá này?');" style="--bs-btn-padding-y: .1rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .75rem;">Xóa</button>
+                                        }
+                                    }
+                                }
+                            </div>
+                        </div>
+                        <div class="text-warning my-2">
+                            @for (int i = 0; i < danhGia.DiemDanhGia.GetValueOrDefault(0); i++)
+                            {<i class="fas fa-star"></i>}
+                            @for (int i = 0; i < (5 - danhGia.DiemDanhGia.GetValueOrDefault(0)); i++)
+                            {<i class="far fa-star"></i>}
+                        </div>
+                        <p>@danhGia.BinhLuan</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-3">
+        }
+    </div>
+</div>
+
+<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered modal-lg"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Xem ảnh sản phẩm</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body text-center"><img src="" id="modalImage" class="img-fluid" alt="Ảnh sản phẩm phóng to"></div></div></div></div>
+<div class="modal fade" id="editReviewModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content">@using (Html.BeginForm("SuaDanhGia", "Home", FormMethod.Post))
+{@Html.AntiForgeryToken() <div class="modal-header"><h5 class="modal-title">Chỉnh sửa đánh giá</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body">@Html.Hidden("maSP", Model.MaSP) <input type="hidden" name="maDG" id="editMaDG" /> <div class="mb-3"><label class="form-label fw-bold">Đánh giá của bạn:</label><div class="rating-stars-input" id="editRatingInput"><i class="far fa-star" data-value="1"></i><i class="far fa-star" data-value="2"></i><i class="far fa-star" data-value="3"></i><i class="far fa-star" data-value="4"></i><i class="far fa-star" data-value="5"></i></div><input type="hidden" name="DiemDanhGia" id="editRatingValue" value="0" /></div><div class="mb-3"><label for="editBinhLuan" class="form-label fw-bold">Bình luận:</label><textarea class="form-control" id="editBinhLuan" name="BinhLuan" rows="4"></textarea></div></div><div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button><button type="submit" class="btn btn-primary">Lưu thay đổi</button></div>}</div></div></div>
+
+@section scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Script cho sản phẩm cùng loại Slider
+            window.scrollRelated = function (direction) {
+                const container = document.getElementById('related-slider');
+                const cardWidth = 240 + 16; // Width + gap
+                container.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+            };
+
+            // ... (Các script cũ giữ nguyên) ...
+            var collapseElement = document.getElementById('productDescriptionCollapse');
+            var toggleButton = document.getElementById('toggleDescriptionBtn');
+            if (collapseElement && toggleButton) {
+                collapseElement.addEventListener('show.bs.collapse', function () { toggleButton.innerText = 'Thu gọn'; });
+                collapseElement.addEventListener('hide.bs.collapse', function () { toggleButton.innerText = 'Xem thêm'; });
+            }
+
+            const mainImage = document.getElementById('mainProductImage');
+            const imageSourcesElement = document.getElementById('imageSources');
+            const prevBtn = document.getElementById('prevImageBtn');
+            const nextBtn = document.getElementById('nextImageBtn');
+            const thumbnails = document.querySelectorAll('.thumbnail-img');
+
+            if (mainImage && imageSourcesElement && prevBtn && nextBtn) {
+                let imagePaths = [];
+                try {
+                    imagePaths = JSON.parse(imageSourcesElement.dataset.images);
+                } catch (e) {
+                    console.warn("Could not parse image sources. Using main image only as fallback.");
+                    imagePaths = [mainImage.src];
+                }
+
+                let currentImageIndex = 0;
+                const initialSrc = mainImage.getAttribute('src');
+                const initialIndex = imagePaths.findIndex(path => decodeURI(path) === decodeURI(initialSrc));
+                if (initialIndex !== -1) currentImageIndex = initialIndex;
+
+                function updateImage() {
+                    if (imagePaths.length > 0) {
+                        mainImage.src = imagePaths[currentImageIndex];
+                        mainImage.closest('a').setAttribute('href', '#');
+                        thumbnails.forEach(thumb => {
+                            const thumbIndex = parseInt(thumb.dataset.index);
+                            if (thumbIndex === currentImageIndex) {
+                                thumb.classList.add('active');
+                                thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                            } else {
+                                thumb.classList.remove('active');
+                            }
+                        });
+                    }
+                }
+                prevBtn.addEventListener('click', function () {
+                    if (imagePaths.length > 0) {
+                        currentImageIndex = (currentImageIndex - 1 + imagePaths.length) % imagePaths.length;
+                        updateImage();
+                    }
+                });
+                nextBtn.addEventListener('click', function () {
+                    if (imagePaths.length > 0) {
+                        currentImageIndex = (currentImageIndex + 1) % imagePaths.length;
+                        updateImage();
+                    }
+                });
+                thumbnails.forEach(thumb => {
+                    thumb.addEventListener('click', function () { currentImageIndex = parseInt(this.dataset.index); updateImage(); });
+                });
+            }
+
+            const imageModal = document.getElementById('imageModal');
+            const modalImage = document.getElementById('modalImage');
+            if (imageModal && modalImage && mainImage) {
+                imageModal.addEventListener('show.bs.modal', function () { modalImage.src = mainImage.src; });
+            }
+
+            const btnGiam = document.getElementById('btn-giam');
+            const btnTang = document.getElementById('btn-tang');
+            const inputSoLuong = document.getElementById('quantity');
+            if (btnGiam && btnTang && inputSoLuong) {
+                btnTang.addEventListener('click', function () {
+                    let soHienTai = parseInt(inputSoLuong.value, 10);
+                    if (isNaN(soHienTai)) soHienTai = 1;
+                    inputSoLuong.value = soHienTai + 1;
+                });
+                btnGiam.addEventListener('click', function () {
+                    let soHienTai = parseInt(inputSoLuong.value, 10);
+                    if (isNaN(soHienTai)) soHienTai = 1;
+                    if (soHienTai > 1) inputSoLuong.value = soHienTai - 1;
+                });
+                inputSoLuong.addEventListener('input', function () {
+                    let value = inputSoLuong.value.replace(/[^0-9]/g, '');
+                    if (value === '' || parseInt(value, 10) < 1) value = '1';
+                    inputSoLuong.value = value;
+                });
+            }
+
+            function setupStarRating(containerId, inputId) {
+                const container = document.getElementById(containerId);
+                if (!container) return null;
+                const stars = container.querySelectorAll('i');
+                const ratingInput = document.getElementById(inputId);
+                let currentRating = 0;
+                function updateStarsVisual(rating) {
+                    currentRating = rating;
+                    if (ratingInput) ratingInput.value = currentRating;
+                    stars.forEach((s, index) => {
+                        if (index < rating) { s.classList.add('selected', 'fas'); s.classList.remove('far'); }
+                        else { s.classList.remove('selected', 'fas'); s.classList.add('far'); }
+                    });
+                }
+                function resetStars() { stars.forEach(s => s.classList.remove('hover')); }
+                stars.forEach(star => {
+                    star.addEventListener('mouseover', function () { resetStars(); const value = parseInt(this.dataset.value); for (let i = 0; i < value; i++) stars[i].classList.add('hover'); });
+                    star.addEventListener('mouseout', function () { resetStars(); updateStarsVisual(currentRating); });
+                    star.addEventListener('click', function () { updateStarsVisual(parseInt(this.dataset.value)); });
+                });
+                return updateStarsVisual;
+            }
+            setupStarRating('ratingInput', 'ratingValue');
+            const updateEditStarsVisual = setupStarRating('editRatingInput', 'editRatingValue');
+            const editModal = document.getElementById('editReviewModal');
+            if (editModal && updateEditStarsVisual) {
+                editModal.addEventListener('show.bs.modal', function (event) {
+                    const button = event.relatedTarget;
+                    const madg = button.dataset.madg;
+                    const binhluan = button.dataset.binhluan;
+                    const diem = parseInt(button.dataset.diem, 10);
+                    editModal.querySelector('#editMaDG').value = madg;
+                    editModal.querySelector('#editBinhLuan').value = binhluan;
+                    updateEditStarsVisual(diem);
+                });
+            }
+        });
+    </script>
+}

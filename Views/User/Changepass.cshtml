@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Changepass";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+
+<div class="card" style="max-width:600px;margin:0 auto">
+
+    @using (Html.BeginForm("Changepass_submit", "User", FormMethod.Post, new { @class = "card-body" }))
+    {
+        <div class="form-horizontal" style="padding:20px">
+            <div class="mb-3 row align-items-center">
+                <label class="col-sm-4 col-form-label">Mật khẩu hiện tại</label>
+                <div class="col-sm-8">
+                    <input type="password" name="oldpass" class="form-control" required />
+                </div>
+            </div>
+
+            <div class="mb-3 row align-items-center">
+                <label class="col-sm-4 col-form-label">Mật khẩu mới</label>
+                <div class="col-sm-8">
+                    <input type="password" name="newpass" class="form-control" required />
+                </div>
+            </div>
+
+            @if (ViewBag.Loi != "")
+            {
+                <div class="text-danger mb-2">@ViewBag.Loi</div>
+            }
+
+            @if (ViewBag.Thanhcong != "")
+            {
+                <div class="text-success mb-2">@ViewBag.Thanhcong</div>
+            }
+
+            <div style="text-align:center;margin-top:20px">
+                <button class="btn btn-primary" style="border-radius:30px">Đổi mật khẩu</button>
+            </div>
+        </div>
+    }
+</div>

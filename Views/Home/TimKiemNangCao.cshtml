@@ -1,0 +1,94 @@
+﻿@model List<ĐỒ_ÁN.tblSanPham>
+
+@{
+    ViewBag.Title = "Tìm kiếm nâng cao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Cast ViewBag về đúng kiểu
+    var danhSachLoai = ViewBag.DanhSachLoai as List<ĐỒ_ÁN.tblLoaiSP>;
+}
+
+<div class="container-fluid px-4 my-4">
+    <h2 class="mb-3">Tìm kiếm nâng cao</h2>
+
+    <!-- FORM TÌM KIẾM -->
+    <form method="get" action="@Url.Action("TimKiemNangCao", "Home")" class="border p-3 rounded bg-light mb-4">
+        <div class="row mb-3">
+            <div class="col-md-4">
+                <label>Từ khóa:</label>
+                <input type="text" name="keyword" value="@ViewBag.keyword" class="form-control" placeholder="Nhập tên sản phẩm...">
+            </div>
+
+            <div class="col-md-3">
+                <label>Loại sản phẩm:</label>
+                <select name="loai" class="form-control">
+                    <option value="">-- Tất cả --</option>
+                    @if (danhSachLoai != null)
+                    {
+                        foreach (var item in danhSachLoai)
+                        {
+                            <option value="@item.MaLoai" @(ViewBag.loai == item.MaLoai ? "selected" : "")>
+                                @item.TenLoai
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-3">
+                <label>Giá từ:</label>
+                <input type="number" name="min" value="@ViewBag.min" class="form-control" placeholder="0">
+            </div>
+
+            <div class="col-md-3">
+                <label>Giá đến:</label>
+                <input type="number" name="max" value="@ViewBag.max" class="form-control" placeholder="1000000">
+            </div>
+
+            <div class="col-md-4">
+                <label>Sắp xếp:</label>
+                <select name="sort" class="form-control">
+                    <option value="">-- Không sắp xếp --</option>
+                    <option value="price_asc" @(ViewBag.sort == "price_asc" ? "selected" : "")>Giá tăng dần</option>
+                    <option value="price_desc" @(ViewBag.sort == "price_desc" ? "selected" : "")>Giá giảm dần</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i> Tìm kiếm
+        </button>
+        <a href="@Url.Action("TimKiemNangCao", "Home")" class="btn btn-secondary">
+            <i class="fas fa-redo"></i> Xóa bộ lọc
+        </a>
+        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-secondary">
+            <i class="fas fa-home"></i> Trang chủ
+        </a>
+    </form>
+
+    <hr />
+
+    <!-- KẾT QUẢ TÌM KIẾM -->
+    <section class="products">
+        @if (ViewBag.HasSearched == true)
+        {
+            <!-- Đã tìm kiếm - hiển thị kết quả -->
+            <h3 class="mb-3">Kết quả tìm kiếm: <span class="text-primary">@ViewBag.resultCount sản phẩm</span></h3>
+
+            <div class="product-container">
+                @Html.Partial("_ProductGrid", Model ?? new List<ĐỒ_ÁN.tblSanPham>())
+            </div>
+        }
+        else
+        {
+            <!-- Chưa tìm kiếm - chỉ hiển thị thông báo -->
+            <div class="alert alert-info text-center mt-4" role="alert">
+                <i class="fas fa-info-circle fa-2x mb-2"></i>
+                <h4>Nhập thông tin để tìm kiếm sản phẩm</h4>
+                <p class="mb-0">Vui lòng nhập từ khóa, chọn loại sản phẩm hoặc khoảng giá để tìm kiếm.</p>
+            </div>
+        }
+    </section>
+</div>

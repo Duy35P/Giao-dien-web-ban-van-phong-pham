@@ -1,0 +1,8 @@
+﻿@model List<ĐỒ_ÁN.tblNhaCungCap>
+
+@foreach (var item in Model)
+{
+    <a href="@Url.Action("TimTheoNCC", "Home", new { id = item.MaNCC })">
+        @item.TenNCC
+    </a>
+}

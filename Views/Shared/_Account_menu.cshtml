@@ -1,0 +1,104 @@
+﻿
+<style>
+    .avatar-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .edit-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 150px;
+        height: 150px;
+        background: rgba(0,0,0,0.55);
+        opacity: 0;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+
+    .avatar-container:hover .edit-overlay {
+        opacity: 1;
+    }
+</style>
+
+
+<div class="card side-menu" style="border:none">
+    <div style="text-align:center;margin-bottom:30px;margin-top:20px">
+        <div class="position-relative d-inline-block avatar-container">
+            <img id="avatarPreview"
+                 src="@Url.Content("~/Content/Images/" + ViewBag.Avatar)"
+                 class="rounded-circle border border-2"
+                 style="width:150px; height:150px; object-fit:cover;" />
+
+            <!-- Icon bút -->
+            <div class="edit-overlay rounded-circle d-flex justify-content-center align-items-center"
+                 onclick="document.getElementById('avatarInput').click();">
+                <i class="bi bi-pencil-fill text-white fs-4"></i>
+            </div>
+        </div>
+
+        <form method="post" enctype="multipart/form-data"
+              action="@Url.Action("Update_Avatar", "User")" id="avatarForm">
+            <input type="file" id="avatarInput" name="avatarFile" class="d-none" accept="image/*" onchange="submitAvatar(event)">
+        </form>
+    </div>
+    <ul class="list-group" id="loai-list">
+        <li class="list-group-item" style="list-style:none" data-filter-text="">
+            <a href="@Url.Action("User_Info", "User")" class="d-flex w-100 align-items-center text-decoration-none">
+                <div class="left">
+
+                    <span>Thông tin tài khoản</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="list-group-item" style="list-style:none" data-filter-text="">
+            <a href="@Url.Action("Changepass","User")" class="d-flex w-100 align-items-center text-decoration-none">
+                <div class="left">
+
+                    <span>Đổi mật khẩu</span>
+                </div>
+            </a>
+        </li>
+
+        <li class="list-group-item" style="list-style:none" data-filter-text="">
+            <a href="@Url.Action("Purchase_Order","User")" class="d-flex w-100 align-items-center text-decoration-none">
+                <div class="left">
+                    <span>Danh sách đơn hàng</span>
+                </div>
+            </a>
+        </li>
+        <li class="list-group-item" style="list-style:none" data-filter-text="">
+            <a href="@Url.Action("Logout","User")" class="d-flex w-100 align-items-center text-decoration-none">
+                <div class="left">
+
+                    <span>Đăng xuất</span>
+                </div>
+            </a>
+        </li>
+
+    </ul>
+</div>
+
+<script>
+    function previewAvatar(event) {
+        const file = event.target.files[0];
+        if (file) {
+            document.getElementById("avatarPreview").src = URL.createObjectURL(file);
+        }
+    }
+</script>
+
+<script>
+    function submitAvatar(event) {
+        const file = event.target.files[0];
+        if (file) {
+            // Hiển thị preview ngay
+            document.getElementById("avatarPreview").src = URL.createObjectURL(file);
+
+            // Submit form
+            document.getElementById("avatarForm").submit();
+        }
+    }
+</script>

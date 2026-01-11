@@ -1,0 +1,8 @@
+﻿@model List<ĐỒ_ÁN.tblLoaiSP>
+
+@foreach (var item in Model)
+{
+    <a href="@Url.Action("TimTheoLoai", "Home", new { id = item.MaLoai })">
+        @item.TenLoai
+    </a>
+}

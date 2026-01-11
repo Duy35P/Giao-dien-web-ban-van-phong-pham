@@ -1,0 +1,206 @@
+﻿@model ĐỒ_ÁN.tblSanPham
+@{
+    ViewBag.Title = "Thêm Sản Phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h2 class="mb-4"><i class="bi bi-plus-circle"></i> Thêm Sản Phẩm Mới</h2>
+
+    @using (Html.BeginForm("ThemSanPham", "Admin", FormMethod.Post, new { @class = "card p-4", enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Tên Sản Phẩm <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.TenSP, new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Thương Hiệu <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.ThuongHieu, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Loại Sản Phẩm <span class="text-danger">*</span></label>
+                @Html.DropDownListFor(m => m.LoaiSP, (SelectList)ViewBag.LoaiSP, "-- Chọn loại --", new { @class = "form-select", required = "required" })
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Nhà Cung Cấp <span class="text-danger">*</span></label>
+                @Html.DropDownListFor(m => m.NCC, (SelectList)ViewBag.NCC, "-- Chọn NCC --", new { @class = "form-select", required = "required" })
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Đơn Vị Tính <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.DonViTinh, new { @class = "form-control", placeholder = "Cái, Hộp, Cây...", required = "required" })
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <label class="form-label">Trạng Thái <span class="text-danger">*</span></label>
+                <select name="TrangThai" class="form-select" required>
+                    <option value="True" selected>Đang bán</option>
+                    <option value="False">Tắt</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Số Lượng Tồn <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.SoLuongTon, new { @class = "form-control", type = "number", min = "0", required = "required" })
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Giá Bán <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.GiaBan, new { @class = "form-control", type = "number", min = "0", step = "1000", required = "required" })
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Mô Tả Chi Tiết</label>
+            @Html.TextAreaFor(m => m.MoTaChiTiet, new { @class = "form-control", rows = "3" })
+        </div>
+
+        <hr class="my-4" />
+        <h4 class="mb-3"><i class="bi bi-images"></i> Hình Ảnh Sản Phẩm</h4>
+
+        <div class="mb-3">
+            <label class="form-label">
+                <i class="bi bi-images"></i> Chọn Hình Ảnh <span class="text-danger">*</span>
+            </label>
+            <input type="file" name="AnhSanPhamFiles" id="AnhSanPhamFiles"
+                   class="form-control" accept="image/*" multiple
+                   onchange="previewImages(event)" required />
+            <div class="alert alert-info mt-2 mb-0">
+                <i class="bi bi-info-circle"></i>
+                <strong>Lưu ý:</strong>
+                <ul class="mb-0 mt-1">
+                    <li><strong>Ảnh đầu tiên</strong> sẽ là ảnh đại diện (hiển thị trong danh sách)</li>
+                    <li><strong>Các ảnh còn lại</strong> sẽ là ảnh mô tả chi tiết sản phẩm</li>
+                    <li>Chọn nhiều ảnh bằng cách giữ <kbd>Ctrl</kbd> + Click chuột</li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="previewContainer" class="row mb-3"></div>
+
+        if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger mt-3">
+                <i class="bi bi-exclamation-triangle"></i> @TempData["Error"]
+            </div>
+        }
+
+        <div class="text-end mt-4">
+            <a href="@Url.Action("QuanLySanPham","Admin")" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Hủy
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Thêm Sản Phẩm
+            </button>
+        </div>
+    }
+</div>
+
+<style>
+    .img-preview-wrapper {
+        position: relative;
+        margin-bottom: 10px;
+    }
+
+    .img-preview {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .img-preview-wrapper.first-image .img-preview {
+        border: 3px solid #0d6efd;
+    }
+
+    .badge-overlay {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+
+    .img-number {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(0,0,0,0.7);
+        color: white;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+    }
+</style>
+
+@section scripts {
+    <script>
+        function previewImages(event) {
+            var container = document.getElementById('previewContainer');
+            container.innerHTML = '';
+
+            var files = event.target.files;
+
+            if (files.length === 0) return;
+
+            for (var i = 0; i < files.length; i++) {
+                (function (index) {
+                    var file = files[index];
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var col = document.createElement('div');
+                        col.className = 'col-md-3 col-sm-4 col-6';
+
+                        var wrapper = document.createElement('div');
+                        wrapper.className = 'img-preview-wrapper';
+                        if (index === 0) {
+                            wrapper.classList.add('first-image');
+                        }
+
+                        var img = document.createElement('img');
+                        img.src = e.target.result;
+                        img.className = 'img-preview';
+
+                        var badge = document.createElement('span');
+                        badge.className = 'badge badge-overlay';
+                        if (index === 0) {
+                            badge.className += ' bg-primary';
+                            badge.textContent = 'ẢNH ĐẠI DIỆN';
+                        } else {
+                            badge.className += ' bg-secondary';
+                            badge.textContent = 'ẢNH MÔ TẢ';
+                        }
+
+                        var number = document.createElement('div');
+                        number.className = 'img-number';
+                        number.textContent = index + 1;
+
+                        wrapper.appendChild(img);
+                        wrapper.appendChild(badge);
+                        wrapper.appendChild(number);
+                        col.appendChild(wrapper);
+                        container.appendChild(col);
+                    }
+
+                    reader.readAsDataURL(file);
+                })(i);
+            }
+        }
+    </script>
+}

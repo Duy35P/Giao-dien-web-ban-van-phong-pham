@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ĐỒ_ÁN.tblSanPham>
+@{
+    ViewBag.Title = "Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-4">
+    <h2 class="mb-4 text-primary"><i class=""></i> Tất Cả Sản Phẩm</h2>
+
+    <!-- Danh sách sản phẩm -->
+    <div class="row" id="product-list">
+        @foreach (var item in Model)
+        {
+            
+            <div class="col-md-3 col-sm-6 mb-4 product-item" style="display:none;">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="position-relative">
+                        <img src="~/Content/images/@item.AnhDaiDien" class="card-img-top" alt="@item.TenSP" style="height: 200px; object-fit: contain; padding: 10px;">
+                        @if (item.SoLuongTon == 0)
+                        {
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-2">Hết hàng</span>
+                        }
+                    </div>
+                    <div class="card-body d-flex flex-column">
+                        <h6 class="card-title text-truncate" title="@item.TenSP">
+                            <a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.MaSP })" class="text-decoration-none text-dark">@item.TenSP</a>
+                        </h6>
+                        <div class="mt-auto">
+                            <p class="card-text text-danger fw-bold mb-2">@string.Format("{0:N0}đ", item.GiaBan)</p>
+
+                            <a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.MaSP })" class="btn btn-outline-primary btn-sm w-100">
+                                <i class="bi bi-eye-fill"></i> Xem chi tiết
+                            </a>
+                            
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+
+    <div class="text-center mt-4">
+        <button id="loadMoreBtn" class="btn btn-primary px-4 py-2">
+            Xem thêm sản phẩm <i class="fas fa-chevron-down ms-1"></i>
+        </button>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const products = document.querySelectorAll(".product-item");
+            const loadMoreBtn = document.getElementById("loadMoreBtn");
+
+            let itemsToShow = 8; // Số lượng hiển thị ban đầu
+            let itemsIncrement = 8; // Số lượng thêm mỗi lần bấm
+
+            // Hàm hiển thị sản phẩm
+            function showItems(count) {
+                let visibleCount = 0;
+                products.forEach((item, index) => {
+                    if (index < count) {
+                        item.style.display = "block"; // Hiện lên
+                        visibleCount++;
+                    }
+                });
+
+                // Nếu đã hiện hết thì ẩn nút Xem thêm
+                if (visibleCount >= products.length) {
+                    loadMoreBtn.style.display = "none";
+                }
+            }
+
+            showItems(itemsToShow);
+
+            // 2. Bắt sự kiện bấm nút
+            loadMoreBtn.addEventListener("click", function () {
+                itemsToShow += itemsIncrement; // Tăng giới hạn
+                showItems(itemsToShow); // Cập nhật hiển thị
+            });
+        });
+    </script>
+}

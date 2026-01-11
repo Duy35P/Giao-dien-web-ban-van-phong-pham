@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ĐỒ_ÁN.tblKhachHang>
+@{
+    ViewBag.Title = "Quản Lý Khách Hàng";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container-fluid">
+    <h2 class="mb-4"><i class="bi bi-people"></i> Quản Lý Khách Hàng</h2>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Mã KH</th>
+                        <th>Tên Khách Hàng</th>
+                        <th>Email</th>
+                        <th>Điện Thoại</th>
+                        <th>Địa Chỉ</th>
+                        <th>Giới Tính</th>
+                        <th>Thao Tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.MaKH</td>
+                            <td>@item.TenKH</td>
+                            <td>@item.Email</td>
+                            <td>@item.DienThoai</td>
+                            <td>@item.DiaChi</td>
+                            <td>@item.GioiTinh</td>
+                            <td>
+                                <a href="@Url.Action("ChiTietKhachHang","Admin", new { id = item.MaKH })"
+                                   class="btn btn-sm btn-info">
+                                    <i class="bi bi-eye">Xem</i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger"
+                                        onclick="xoaKhachHang(@item.MaKH)">
+                                    <i class="bi bi-trash">Xóa</i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        function xoaKhachHang(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) {
+                $.ajax({
+                    url: '@Url.Action("XoaKhachHang", "Admin")',
+                    type: 'POST',
+                    data: { id: id },
+                    success: function() {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+}

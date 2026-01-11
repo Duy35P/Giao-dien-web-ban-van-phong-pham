@@ -1,0 +1,94 @@
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\ĐỒ ÁN.dll.config
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\ĐỒ ÁN.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\ĐỒ ÁN.pdb
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\csc.exe
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\csc.exe.config
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\csc.rsp
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\csi.exe
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\csi.exe.config
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\csi.rsp
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.Managed.Core.targets
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\Microsoft.Win32.Primitives.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.AppContext.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Collections.Immutable.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Console.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Diagnostics.DiagnosticSource.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Diagnostics.StackTrace.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Globalization.Calendars.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.IO.Compression.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.IO.Compression.ZipFile.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.IO.FileSystem.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.IO.FileSystem.Primitives.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Net.Http.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Net.Sockets.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Reflection.Metadata.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Runtime.InteropServices.RuntimeInformation.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Security.Cryptography.Encoding.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Security.Cryptography.Primitives.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Text.Encoding.CodePages.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Threading.Tasks.Extensions.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.ValueTuple.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Xml.ReaderWriter.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Xml.XmlDocument.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Xml.XPath.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\System.Xml.XPath.XDocument.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\vbc.exe
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\vbc.exe.config
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\vbc.rsp
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\VBCSCompiler.exe
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\roslyn\VBCSCompiler.exe.config
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Antlr3.Runtime.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\EntityFramework.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Host.SystemWeb.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.Cookies.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.Facebook.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.Google.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Web.Infrastructure.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Newtonsoft.Json.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Owin.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Helpers.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Mvc.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Optimization.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Razor.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.WebPages.Deployment.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.WebPages.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.WebPages.Razor.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\WebGrease.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\EntityFramework.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Host.SystemWeb.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.Cookies.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.Facebook.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.Owin.Security.Google.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Helpers.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Mvc.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Optimization.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.Razor.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.WebPages.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.WebPages.Deployment.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\System.Web.WebPages.Razor.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Newtonsoft.Json.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Antlr3.Runtime.pdb
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\obj\Debug\ĐỒ ÁN.csproj.AssemblyReference.cache
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\obj\Debug\ĐỒ ÁN.csproj.CoreCompileInputs.cache
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\obj\Debug\ĐỒ ÁN.csproj.Up2Date
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\obj\Debug\ĐỒ ÁN.dll
+E:\DAIHOC\LTWEB\ĐỒ ÁN LẬP TRÌNH WEB\ĐỒ ÁN\ĐỒ ÁN\obj\Debug\ĐỒ ÁN.pdb

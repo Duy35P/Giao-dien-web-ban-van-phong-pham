@@ -1,0 +1,58 @@
+﻿@model ĐỒ_ÁN.tblNhanVien
+@{
+    ViewBag.Title = "Thêm Nhân Viên";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <h2 class="mb-4"><i class="bi bi-plus-circle"></i> Thêm Nhân Viên Mới</h2>
+
+    @using (Html.BeginForm("ThemNhanVien", "Admin", FormMethod.Post, new { @class = "card p-4" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Tên Đăng Nhập <span class="text-danger">*</span></label>
+                @Html.TextBoxFor(m => m.TenNV, new { @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(m => m.TenNV, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Mật Khẩu <span class="text-danger">*</span></label>
+                @Html.PasswordFor(m => m.MatKhau, new { @class = "form-control", required = "required" })
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Giới Tính</label>
+                @Html.DropDownListFor(m => m.GioiTinh, new SelectList(new[] { "Nam", "Nữ" }), "-- Chọn --", new { @class = "form-select" })
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Năm Sinh</label>
+                @Html.TextBoxFor(m => m.NamSinh, new { @class = "form-control", type = "number", min = "1950", max = "2010" })
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Vai Trò <span class="text-danger">*</span></label>
+                @Html.DropDownListFor(m => m.VaiTro, (SelectList)ViewBag.VaiTro, "-- Chọn vai trò --", new { @class = "form-select", required = "required" })
+            </div>
+        </div>
+
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i>
+            <strong>Lưu ý:</strong> Tên đăng nhập phải là duy nhất và không được trùng với nhân viên khác.
+        </div>
+
+        <div class="text-end">
+            <a href="@Url.Action("QuanLyNhanVien","Admin")" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Hủy
+            </a>
+            <button type="submit" class="btn btn-primary">
+                <i class="bi bi-check-circle"></i> Thêm Nhân Viên
+            </button>
+        </div>
+    }
+</div>

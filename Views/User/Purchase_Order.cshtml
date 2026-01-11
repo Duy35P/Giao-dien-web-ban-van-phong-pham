@@ -1,0 +1,143 @@
+﻿
+@{
+    ViewBag.Title = "Purchase_Order";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<ĐỒ_ÁN.tblHoaDon>
+
+<div class="card" style="padding:30px;margin:0 auto">
+    <h2 class="card-title" style="text-align:center">Lịch sử mua hàng</h2>
+    <div class="mb-3">
+        <label class="form-label fw-bold">Lọc theo tình trạng</label>
+        <select id="orderStatus" class="form-select" style="max-width: 300px;">
+            <option value="@Url.Action("Purchase_Order","User")" @(ViewBag.Status == "all" ? "selected" : "")>Tất cả đơn hàng</option>
+            <option value="@Url.Action("Order_Pending","User")"  @(ViewBag.Status == "pending" ? "selected" : "")>Đang xử lý</option>
+            <option value="@Url.Action("Order_Delivering","User")" @(ViewBag.Status == "delivering" ? "selected" : "")>Đang giao</option>
+            <option value="@Url.Action("Order_Done","User")" @(ViewBag.Status == "done" ? "selected" : "")>Đã giao</option>
+            <option value="@Url.Action("Order_Cancelled","User")" @(ViewBag.Status == "cancelled" ? "selected" : "")>Đã hủy</option>
+        </select>
+    </div>
+
+    <div class="card-body">
+        @foreach (var hd in Model)
+        {
+            <div class="card" style="padding:20px;margin-bottom:40px">
+                <div class="row">
+                    <div class="col-4">
+                        <h6>Mã đơn hàng:</h6>
+                    </div>
+                    <div class="col-6">
+                        <p>@hd.MaHD</p>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-4">
+                        <h6>Ngày đặt hàng:</h6>
+                    </div>
+                    <div class="col-6">
+                        <p>@hd.NgayLap</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <h6>Địa chỉ nhận hàng:</h6>
+                    </div>
+                    <div class="col-6">
+                        <p>@hd.DiaChiGiaoHang</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-4">
+                        <h6>Tình trạng thanh toán:</h6>
+                    </div>
+                    <div class="col-6">
+                        @if (hd.DaThanhToan == true)
+                        {
+                            <p class="text-success">Đã thanh toán</p>
+                        }
+                        else
+                        {
+                            <p class="text-danger">Chưa thanh toán</p>
+                        }
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:3px">
+                    <div class="col-4">
+                        <h6>Tình trạng đơn hàng:</h6>
+                    </div>
+                    <div class="col-6">
+                        @switch (hd.TinhTrang)
+                        {
+                            case 1:
+                                <p style="font-size:16px; font-weight:bolder">Chờ xác nhận</p>
+                                break;
+                            case 2:
+                                <p style="font-size:16px; font-weight:bolder">Đang giao hàng</p>
+                                break;
+                            case 3:
+                                <p style="font-size:16px; font-weight:bolder">Đã giao hàng</p>
+                                break;
+                            case 4:
+                                <p style="font-size:16px; font-weight:bolder">Đã hủy</p>
+                                break;
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr class="table-light">
+                                <th scope="col">Sản phẩm</th>
+                                <th scope="col" class="text-center">Giá</th>
+                                <th scope="col" class="text-center">Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in hd.tblChiTietHoaDon)
+                            {
+                                <tr style="margin-bottom:15px">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <a href="@Url.Action("ChiTietSanPham", "Home", new { id = item.MaSP })">
+                                                <img src="@Url.Content("~/Content/Images/"+item.tblSanPham.AnhDaiDien)" class="me-3" alt="@item.tblSanPham.TenSP" width="50">
+                                                <span class="fw-bold">@item.tblSanPham.TenSP</span>
+                                            </a>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">@item.GiaBan.Value.ToString("N0") Đ</td>
+                                    <td class="text-center">
+                                        <b>@item.SoLuong</b>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-4">
+                        <h4 style="font-weight:bolder">TỔNG TIỀN:</h4>
+                    </div>
+                    <div class="col-7">
+                        <h3 class="text-danger" style="font-weight:bolder;text-align:end">@hd.TongTien.Value.ToString("N0") VNĐ</h3>
+
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.getElementById("orderStatus").addEventListener("change", function () {
+        var url = this.value;
+        if (url !== "") {
+            window.location.href = url;
+        }
+    });
+</script>

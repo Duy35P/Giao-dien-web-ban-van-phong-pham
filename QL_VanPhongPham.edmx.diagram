@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="21c045189a1e437d80f6160cfda7ee3c" Name="Diagram1">
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblChiTietHoaDon" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblDanhGia" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblGioHang" Width="1.5" PointX="5.25" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblHinhAnh" Width="1.5" PointX="5.25" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblHoaDon" Width="1.5" PointX="3" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblKhachHang" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblLoaiSP" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblNhaCungCap" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblNhanVien" Width="1.5" PointX="0.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblSanPham" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblTinhTrang" Width="1.5" PointX="0.75" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_VanPhongPhamModel.tblVaiTro" Width="1.5" PointX="1.5" PointY="16.375" IsExpanded="true" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblChiTiet__MaHD__2D27B809" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblChiTiet__MaSP__2E1BDC42" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblDanhGia__MaKH__31EC6D26" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblDanhGia__MaSP__30F848ED" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblGioHang__MaKH__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblGioHang__MaSP__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblHinhAnh__MaSP__182C9B23" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblHoaDon__MaKH__286302EC" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblHoaDon__MaNV__29572725" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblHoaDon__TinhT__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblSanPha__LoaiS__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblSanPham__NCC__15502E78" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_VanPhongPhamModel.FK__tblNhanVi__VaiTr__239E4DCF" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

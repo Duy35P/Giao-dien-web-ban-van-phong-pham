@@ -1,0 +1,90 @@
+﻿@model ĐỒ_ÁN.tblKhachHang
+
+@{
+    ViewBag.Title = "Update_info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .update-info-form .form-control {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+</style>
+
+<div class="card" style="max-width:600px;margin:0 auto">
+
+    @using (Html.BeginForm("Update_info_submit", "User", FormMethod.Post, new { @class = "card-body" }))
+    {
+        @Html.AntiForgeryToken()
+        <h2 class="card-title" style="text-align:center">Cập nhật thông tin</h2>
+        <div class="form-horizontal" style="padding:20px">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.HiddenFor(model => model.MaKH)
+            </div>
+
+            <div class="form-group update-info-form">
+                <label class="form-label fw-bold">Họ và tên:</label>
+                @Html.EditorFor(model => model.TenKH, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenKH, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(model => model.MatKhau)
+
+            <div class="form-group mb-3">
+                <label class="form-label fw-bold">Giới tính</label>
+                <div class="flex-column">
+                    <div class="form-check">
+                        @Html.RadioButtonFor(m => m.GioiTinh, "Nam",
+                            new { @class = "form-check-input", id = "gtNam" })
+                        <label class="form-check-label" for="gtNam">Nam</label>
+                    </div> 
+
+                    <div class="form-check">
+                        @Html.RadioButtonFor(m => m.GioiTinh, "Nữ",
+                            new { @class = "form-check-input", id = "gtNu" })
+                        <label class="form-check-label" for="gtNu">Nữ</label>
+                    </div>
+                </div>
+
+                @Html.ValidationMessageFor(m => m.GioiTinh, "", new { @class = "text-danger" })
+            </div>
+
+
+            <div class="form-group update-info-form">
+                <label class="form-label fw-bold">Năm sinh:</label>
+                    @Html.EditorFor(model => model.NamSinh, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.NamSinh, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.HiddenFor(model => model.Avarta)
+
+           <div class="form-group update-info-form">
+                <label class="form-label fw-bold">Điện thoại</label>
+                    @Html.EditorFor(model => model.DienThoai, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DienThoai, "", new { @class = "text-danger" })
+            </div>
+
+           <div class="form-group update-info-form">
+               <label class="form-label fw-bold">Email</label>
+                   @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                   @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+           </div>
+
+           <div class="form-group update-info-form">
+               <label class="form-label fw-bold">Địa chỉ</label>
+
+                   @Html.EditorFor(model => model.DiaChi, new { htmlAttributes = new { @class = "form-control" } })
+                   @Html.ValidationMessageFor(model => model.DiaChi, "", new { @class = "text-danger" })
+           </div>
+
+            <div style="text-align:center;margin-top:20px">
+                <button class="btn btn-primary" style="border-radius:30px">Cập nhật thông tin</button>
+            </div>
+        </div>
+    }
+</div>
+
+
+

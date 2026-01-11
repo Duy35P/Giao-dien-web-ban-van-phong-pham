@@ -1,0 +1,564 @@
+﻿@model IEnumerable<ĐỒ_ÁN.tblSanPham>
+@{
+    ViewBag.Title = "Quản Lý Sản Phẩm";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<style>
+    .product-item {
+        background: #fff;
+        border: 1px solid #e1e1e1;
+        border-radius: 3px;
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .product-item:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-color: #3c8dbc;
+            transform: translateY(-2px);
+        }
+
+        .product-item.product-disabled {
+            opacity: 0.6;
+            background: #f9f9f9;
+        }
+
+    .product-img-wrapper {
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #f9f9f9;
+        border-bottom: 1px solid #eee;
+        padding: 10px;
+        position: relative;
+    }
+
+        .product-img-wrapper img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+
+    .product-item:hover .product-img-wrapper img {
+        transform: scale(1.05);
+    }
+
+    .product-item.product-disabled .product-img-wrapper::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+    }
+
+    .product-info {
+        padding: 15px;
+        text-align: center;
+    }
+
+    .product-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+        height: 42px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+    .product-price {
+        color: #d9534f;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+    }
+
+    .product-actions {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+        .product-actions .btn {
+            min-width: 80px;
+            border-radius: 3px;
+        }
+
+    .product-code {
+        background-color: #f4f4f4;
+        color: #888;
+        font-size: 12px;
+        padding: 5px;
+        text-align: center;
+        border-top: 1px solid #eee;
+    }
+
+    .stock-label {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 4px 8px;
+        border-radius: 3px;
+        font-size: 11px;
+        font-weight: bold;
+        color: #fff;
+        z-index: 10;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .label-instock {
+        background-color: #00a65a;
+    }
+
+    .label-lowstock {
+        background-color: #f39c12;
+    }
+
+    .label-outstock {
+        background-color: #dd4b39;
+    }
+
+    /* Nhãn trạng thái */
+    .status-label {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #fff;
+        z-index: 11;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    .status-active {
+        background-color: #00a65a;
+    }
+
+    .status-inactive {
+        background-color: #dd4b39;
+    }
+
+    /* Filter Box Styles */
+    .filter-box {
+        background: #fff;
+        border: 1px solid #d2d6de;
+        border-radius: 3px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+    .filter-section {
+        margin-bottom: 0;
+    }
+
+    .filter-title {
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+        .filter-title i {
+            color: #3c8dbc;
+        }
+
+    /* Radio Button Styles */
+    .radio-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .radio-item {
+        display: flex;
+        align-items: center;
+    }
+
+        .radio-item input[type="radio"] {
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .radio-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+    /* Checkbox Styles */
+    .checkbox-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .checkbox-item {
+        display: flex;
+        align-items: center;
+    }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .checkbox-item label {
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+    /* Filter Actions */
+    .filter-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 15px;
+    }
+
+        .filter-actions button {
+            min-width: 120px;
+        }
+</style>
+
+<section class="content-header">
+    <h1>
+        Quản Lý Sản Phẩm
+        <small>@Model.Count() sản phẩm hiện có</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="@Url.Action("Index", "Admin")"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Sản phẩm</li>
+    </ol>
+</section>
+
+<section class="content">
+    <!-- Action Bar -->
+    <div class="row" style="margin-bottom: 20px;">
+        <div class="col-md-4">
+            <a href="@Url.Action("ThemSanPham", "Admin")" class="btn btn-primary btn-lg btn-flat">
+                <i class="fa fa-plus-circle"></i> Thêm Sản Phẩm Mới
+            </a>
+        </div>
+        <div class="col-md-8">
+            <div class="input-group input-group-lg">
+                <input type="text" class="form-control" placeholder="Tìm kiếm tên sản phẩm..." id="searchBox">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Box -->
+    <div class="filter-box">
+        <div class="row">
+            <!-- Lọc theo Loại sản phẩm -->
+            <div class="col-md-4">
+                <div class="filter-section">
+                    <div class="filter-title">
+                        <i class="fa fa-filter"></i>
+                        <span>Loại Sản Phẩm</span>
+                    </div>
+                    <div class="radio-group">
+                        <div class="radio-item">
+                            <input type="radio" name="loaiSP" id="loaiAll" value="all" checked>
+                            <label for="loaiAll">Tất cả</label>
+                        </div>
+                        @foreach (var loai in ViewBag.DanhSachLoai as List<ĐỒ_ÁN.tblLoaiSP>)
+                        {
+                            <div class="radio-item">
+                                <input type="radio" name="loaiSP" id="loai_@loai.MaLoai" value="@loai.MaLoai">
+                                <label for="loai_@loai.MaLoai">@loai.TenLoai</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lọc theo Trạng thái -->
+            <div class="col-md-4">
+                <div class="filter-section">
+                    <div class="filter-title">
+                        <i class="fa fa-toggle-on"></i>
+                        <span>Trạng Thái</span>
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="statusActive" value="active" checked>
+                            <label for="statusActive">
+                                <span class="label label-success">Đang bán</span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="statusInactive" value="inactive" checked>
+                            <label for="statusInactive">
+                                <span class="label label-danger">Tắt</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lọc theo Tình trạng kho -->
+            <div class="col-md-4">
+                <div class="filter-section">
+                    <div class="filter-title">
+                        <i class="fa fa-cubes"></i>
+                        <span>Tình Trạng Kho</span>
+                    </div>
+                    <div class="checkbox-group">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="stockInStock" value="instock" checked>
+                            <label for="stockInStock">
+                                <span class="label label-success">Còn hàng</span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="stockLowStock" value="lowstock" checked>
+                            <label for="stockLowStock">
+                                <span class="label label-warning">Sắp hết</span>
+                            </label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="stockOutStock" value="outstock" checked>
+                            <label for="stockOutStock">
+                                <span class="label label-danger">Hết hàng</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter Actions -->
+        <div class="filter-actions">
+            <button type="button" class="btn btn-primary btn-flat" onclick="applyFilters()">
+                <i class="fa fa-check"></i> Áp Dụng
+            </button>
+            <button type="button" class="btn btn-default btn-flat" onclick="resetFilters()">
+                <i class="fa fa-refresh"></i> Đặt Lại
+            </button>
+        </div>
+    </div>
+
+    <!-- Alerts -->
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible" style="margin-bottom: 20px;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-check"></i> Thành công!</h4>
+            @TempData["Success"]
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible" style="margin-bottom: 20px;">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-ban"></i> Lỗi!</h4>
+            @TempData["Error"]
+        </div>
+    }
+
+    <!-- Product List -->
+    <div class="row" id="productList">
+        @foreach (var item in Model)
+        {
+            string stockClass = "label-instock";
+            string stockText = "Còn hàng";
+            string stockStatus = "instock";
+
+            if (item.SoLuongTon == 0)
+            {
+                stockClass = "label-outstock";
+                stockText = "Hết hàng";
+                stockStatus = "outstock";
+            }
+            else if (item.SoLuongTon < 10)
+            {
+                stockClass = "label-lowstock";
+                stockText = "Sắp hết";
+                stockStatus = "lowstock";
+            }
+
+            string productStatus = item.TrangThai ? "active" : "inactive";
+            string productClass = item.TrangThai ? "" : "product-disabled";
+
+            <div class="col-md-3 col-sm-4 col-xs-12 product-column"
+                 data-loai="@item.LoaiSP"
+                 data-stock="@stockStatus"
+                 data-status="@productStatus"
+                 data-name="@item.TenSP.ToLower()">
+                <div class="product-item @productClass">
+                    <!-- Nhãn trạng thái -->
+                    <div class="status-label @(item.TrangThai ? "status-active" : "status-inactive")">
+                        @(item.TrangThai ? "ĐANG BÁN" : "TẮT")
+                    </div>
+
+                    <div class="stock-label @stockClass">
+                        @stockText (@item.SoLuongTon)
+                    </div>
+
+                    <div class="product-img-wrapper">
+                        <img src="~/Content/Images/@item.AnhDaiDien"
+                             alt="@item.TenSP"
+                             onerror="this.src='https://placehold.co/200x200?text=No+Image'" />
+                    </div>
+
+                    <div class="product-info">
+                        <div class="product-name" title="@item.TenSP">@item.TenSP</div>
+                        <div class="product-price">@string.Format("{0:N0} VNĐ", item.GiaBan)</div>
+
+                        <div class="product-actions">
+                            <a href="@Url.Action("SuaSanPham", "Admin", new { id = item.MaSP })"
+                               class="btn btn-warning btn-sm btn-flat">
+                                <i class="fa fa-edit"></i> Sửa
+                            </a>
+                            @if (item.TrangThai)
+                            {
+                                <button type="button"
+                                        class="btn btn-danger btn-sm btn-flat"
+                                        onclick="toggleTrangThai(@item.MaSP, '@item.TenSP', false)">
+                                    <i class="fa fa-power-off"></i> Tắt
+                                </button>
+                            }
+                            else
+                            {
+                                <button type="button"
+                                        class="btn btn-success btn-sm btn-flat"
+                                        onclick="toggleTrangThai(@item.MaSP, '@item.TenSP', true)">
+                                    <i class="fa fa-power-off"></i> Bật
+                                </button>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="product-code">
+                        Mã: <strong>#@item.MaSP</strong> | @item.tblLoaiSP.TenLoai
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        // Toggle trạng thái sản phẩm
+        function toggleTrangThai(id, tenSP, dangBat) {
+            var action = dangBat ? 'bật' : 'tắt';
+            var message = dangBat
+                ? 'Bạn có chắc chắn muốn BẬT lại sản phẩm "' + tenSP + '" không?\n\nSản phẩm sẽ hiển thị trên cửa hàng.'
+                : 'Bạn có chắc chắn muốn TẮT sản phẩm "' + tenSP + '" không?\n\nSản phẩm sẽ không hiển thị trên cửa hàng.';
+
+            if (confirm(message)) {
+                var formData = new FormData();
+                formData.append('id', id);
+
+                fetch('@Url.Action("ToggleTrangThaiSanPham", "Admin")', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Có lỗi xảy ra khi ' + action + ' sản phẩm.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi:', error);
+                    alert('Có lỗi kết nối server.');
+                });
+            }
+        }
+
+        // Tìm kiếm theo tên
+        document.addEventListener('DOMContentLoaded', function() {
+            var searchBox = document.getElementById('searchBox');
+            if (searchBox) {
+                searchBox.addEventListener('keyup', function() {
+                    applyFilters();
+                });
+            }
+
+            // Tự động áp dụng filter khi thay đổi radio/checkbox
+            document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(function(input) {
+                input.addEventListener('change', applyFilters);
+            });
+        });
+
+        // Áp dụng bộ lọc
+        function applyFilters() {
+            var searchValue = document.getElementById('searchBox').value.toLowerCase();
+            var selectedLoai = document.querySelector('input[name="loaiSP"]:checked').value;
+
+            var statusActive = document.getElementById('statusActive').checked;
+            var statusInactive = document.getElementById('statusInactive').checked;
+
+            var stockInStock = document.getElementById('stockInStock').checked;
+            var stockLowStock = document.getElementById('stockLowStock').checked;
+            var stockOutStock = document.getElementById('stockOutStock').checked;
+
+            var products = document.querySelectorAll('#productList .product-column');
+            var visibleCount = 0;
+
+            products.forEach(function(product) {
+                var productName = product.getAttribute('data-name');
+                var productLoai = product.getAttribute('data-loai');
+                var productStock = product.getAttribute('data-stock');
+                var productStatus = product.getAttribute('data-status');
+
+                var matchSearch = productName.indexOf(searchValue) > -1;
+                var matchLoai = (selectedLoai === 'all') || (productLoai === selectedLoai);
+                var matchStatus = (
+                    (statusActive && productStatus === 'active') ||
+                    (statusInactive && productStatus === 'inactive')
+                );
+                var matchStock = (
+                    (stockInStock && productStock === 'instock') ||
+                    (stockLowStock && productStock === 'lowstock') ||
+                    (stockOutStock && productStock === 'outstock')
+                );
+
+                if (matchSearch && matchLoai && matchStatus && matchStock) {
+                    product.style.display = "";
+                    visibleCount++;
+                } else {
+                    product.style.display = "none";
+                }
+            });
+
+            console.log('Hiển thị ' + visibleCount + ' sản phẩm');
+        }
+
+        // Đặt lại bộ lọc
+        function resetFilters() {
+            document.getElementById('searchBox').value = '';
+            document.getElementById('loaiAll').checked = true;
+            document.getElementById('statusActive').checked = true;
+            document.getElementById('statusInactive').checked = true;
+            document.getElementById('stockInStock').checked = true;
+            document.getElementById('stockLowStock').checked = true;
+            document.getElementById('stockOutStock').checked = true;
+
+            applyFilters();
+        }
+    </script>
+}
